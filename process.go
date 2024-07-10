@@ -3,7 +3,6 @@ package main
 import (
 	"database/sql"
 	"errors"
-	"fmt"
 	"log"
 
 	_ "github.com/lib/pq"
@@ -48,13 +47,12 @@ func (d *TDocument) Process() (*TDocument, error) {
 			return nil, errors.New("reading data from query error")
 		}
 
-		fmt.Printf("Current doc in database: %v\n", curr_doc)
+		// fmt.Printf("Current doc in database: %v\n", curr_doc)
 
 		// Если это дубликат, то не пишем ничего в очередь и не обновляем данные в бд.
 		// При этом здесь нам осталось сравнить только по FetchTime, тк Url и FetchTime формируют
 		// уникальный идентификатор версии, в случае совпадения пар мы и имеем дубликат.
 		if curr_doc.FetchTime == d.FetchTime {
-			fmt.Printf("Nothing to change\n")
 			return nil, nil
 		}
 
@@ -79,7 +77,6 @@ func (d *TDocument) Process() (*TDocument, error) {
 			return nil, errors.New("updating database error")
 		}
 
-		fmt.Printf("Updated doc: %v\n", curr_doc)
 		return &curr_doc, nil
 
 	} else {

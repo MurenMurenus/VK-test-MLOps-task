@@ -21,7 +21,7 @@ func main() {
 
 	for {
 		// Считывание и десериализация
-		m, err := reader.ReadMessage(context.TODO())
+		m, err := reader.ReadMessage(context.Background())
 		if err != nil {
 			log.Printf("Error reading message: %v", err)
 			continue
@@ -66,6 +66,8 @@ func main() {
 			// writer.Close()
 
 			fmt.Printf("Process output: %v\n", res)
+		} else {
+			fmt.Printf("Nothing written as the output\n")
 		}
 	}
 }
